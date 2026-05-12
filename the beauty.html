@@ -1,0 +1,275 @@
+import { useState } from 'react'
+
+export default function TheBeautyRoom() {
+  const [galleryImages, setGalleryImages] = useState([])
+
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files)
+
+    const imageUrls = files.map((file) => ({
+      url: URL.createObjectURL(file),
+      name: file.name,
+    }))
+
+    setGalleryImages((prev) => [...prev, ...imageUrls])
+  }
+
+  const whatsappMessage = encodeURIComponent(
+    'Hola 💖 Gracias por contactar The Beauty Room. ¿En qué servicio deseas agendar?
+
+💅 Uñas
+👁️ Pestañas
+🦶 Quiropodia
+✨ Cejas'
+  )
+
+  return (
+    <div className="min-h-screen bg-[#fdf7f7] text-gray-800 font-sans">
+      {/* HERO */}
+      <section className="relative h-[100vh] flex items-center justify-center bg-gradient-to-b from-pink-100 via-white to-pink-50 overflow-hidden">
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,rgba(255,105,180,0.4),transparent_60%)]"></div>
+
+        <div className="relative z-10 text-center px-6 max-w-4xl">
+          <div className="flex justify-center mb-8 animate-pulse">
+            <img
+              src="/logo.png"
+              alt="The Beauty Room"
+              className="w-[320px] md:w-[500px] drop-shadow-2xl"
+            />
+          </div>
+
+          <p className="mt-4 text-xl md:text-2xl text-gray-600">
+            by Tamara Vargas
+          </p>
+
+          <p className="mt-8 text-lg text-gray-700 leading-relaxed">
+            Uñas • Pestañas • Quiropodia
+            <br />
+            Elegancia, cuidado y belleza en cada detalle.
+          </p>
+
+          <div className="mt-10 flex flex-col md:flex-row gap-4 justify-center">
+            <a
+              href={`https://wa.me/50670154131?text=${whatsappMessage}`}
+              target="_blank"
+              className="px-8 py-4 rounded-2xl bg-pink-500 text-white text-lg shadow-lg hover:scale-105 transition"
+            >
+              Reservar Cita
+            </a>
+
+            <a
+              href="https://www.instagram.com/thebr_tzu"
+              target="_blank"
+              className="px-8 py-4 rounded-2xl border border-pink-400 text-pink-600 text-lg hover:bg-pink-50 transition"
+            >
+              Ver Instagram
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICIOS */}
+      <section className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-pink-600">Nuestros Servicios</h2>
+          <p className="mt-4 text-gray-600 text-lg">
+            Atención profesional y personalizada.
+          </p>
+        </div>
+
+        <div className="mb-16 bg-white rounded-3xl shadow-2xl p-8 border border-pink-100">
+            <h3 className="text-3xl font-bold text-pink-600 text-center mb-6">
+              Subir Imágenes Automáticamente
+            </h3>
+
+            <p className="text-center text-gray-600 text-lg leading-relaxed max-w-3xl mx-auto">
+              Puedes agregar nuevas fotos del salón, uñas, pestañas o cejas directamente desde la página.
+              Solo selecciona las imágenes y automáticamente aparecerán en la galería.
+            </p>
+
+            <div className="mt-8 flex justify-center">
+              <label className="cursor-pointer px-8 py-4 bg-pink-500 hover:bg-pink-600 text-white rounded-2xl shadow-xl transition text-lg font-semibold">
+                Subir Fotos
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageUpload}
+                />
+              </label>
+            </div>
+
+            {galleryImages.length > 0 && (
+              <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+                {galleryImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="overflow-hidden rounded-2xl shadow-xl h-[220px] hover:scale-105 transition"
+                  >
+                    <img
+                      src={image.url}
+                      alt={image.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+          {/* QUIROPODIA */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl hover:-translate-y-2 transition">
+            <div className="text-5xl mb-6">🦶</div>
+            <h3 className="text-2xl font-bold mb-4">Quiropodia</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Exfoliación, masaje y cuidado especializado para pies.
+              Atención para niños, adultos mayores y pacientes diabéticos.
+            </p>
+          </div>
+
+          {/* PESTAÑAS */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl hover:-translate-y-2 transition">
+            <div className="text-5xl mb-6">👁️</div>
+            <h3 className="text-2xl font-bold mb-4">Pestañas</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Extensiones clásicas, híbridas, volumen, lifting y mega volumen
+              para una mirada elegante y natural.
+            </p>
+          </div>
+
+          {/* UÑAS */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl hover:-translate-y-2 transition">
+            <div className="text-5xl mb-6">💅</div>
+            <h3 className="text-2xl font-bold mb-4">Uñas</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Poly Gel, Gel X, Rubber Base, Vita Care y diseños personalizados
+              3D y mano alzada.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* GALERÍA */}
+      <section className="py-24 bg-white px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-pink-600">Galería</h2>
+            <p className="mt-4 text-gray-600 text-lg">
+              Algunos de nuestros trabajos.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="group rounded-3xl overflow-hidden shadow-2xl h-[450px] relative hover:scale-105 transition duration-500">
+              <img
+                src="/unas.jpg"
+                alt="Uñas"
+                className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+              />
+              <div className="absolute inset-0 bg-black/20"></div>
+              <div className="absolute bottom-0 left-0 p-6 text-white">
+                <h3 className="text-3xl font-bold">Uñas</h3>
+                <p className="mt-2 text-sm">Diseños personalizados y elegantes.</p>
+              </div>
+            </div>
+
+            <div className="group rounded-3xl overflow-hidden shadow-2xl h-[450px] relative hover:scale-105 transition duration-500">
+              <img
+                src="/pestanas.jpg"
+                alt="Pestañas"
+                className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+              />
+              <div className="absolute inset-0 bg-black/20"></div>
+              <div className="absolute bottom-0 left-0 p-6 text-white">
+                <h3 className="text-3xl font-bold">Pestañas</h3>
+                <p className="mt-2 text-sm">Volumen, lifting y mirada perfecta.</p>
+              </div>
+            </div>
+
+            <div className="group rounded-3xl overflow-hidden shadow-2xl h-[450px] relative hover:scale-105 transition duration-500">
+              <img
+                src="/beautyroom.jpg"
+                alt="Beauty Room"
+                className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+              />
+              <div className="absolute inset-0 bg-black/20"></div>
+              <div className="absolute bottom-0 left-0 p-6 text-white">
+                <h3 className="text-3xl font-bold">The Beauty Room</h3>
+                <p className="mt-2 text-sm">Belleza, elegancia y cuidado.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 bg-pink-50 rounded-3xl p-8 shadow-lg text-center">
+            <h3 className="text-3xl font-bold text-pink-600 mb-4">
+              Agrega más fotos fácilmente
+            </h3>
+
+            <p className="text-gray-600 text-lg leading-relaxed">
+              Solo debes colocar nuevas imágenes dentro de la carpeta:
+            </p>
+
+            <div className="mt-6 bg-white rounded-2xl p-4 text-left max-w-xl mx-auto shadow-inner">
+              <p className="font-mono text-pink-600">public/</p>
+              <p className="font-mono text-gray-700">unas2.jpg</p>
+              <p className="font-mono text-gray-700">pestanas2.jpg</p>
+              <p className="font-mono text-gray-700">cejas.jpg</p>
+              <p className="font-mono text-gray-700">logo.png</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* UBICACIÓN */}
+      <section className="py-24 px-6 bg-[#fff4f7]">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-pink-600">Ubicación</h2>
+
+          <p className="mt-8 text-lg text-gray-700 leading-relaxed">
+            100 metros sur de Coopetarrazú
+            <br />
+            Locales comerciales contiguo a la capilla.
+          </p>
+
+          <p className="mt-6 text-xl font-semibold text-gray-800">
+            Horario: 10:30am a 6:00pm
+          </p>
+
+          <a
+            href="https://wa.me/50670154131"
+            target="_blank"
+            className="inline-block mt-10 px-8 py-4 rounded-2xl bg-pink-500 text-white text-lg shadow-lg hover:scale-105 transition"
+          >
+            WhatsApp: 7015 4131
+          </a>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-16 text-center bg-pink-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <img
+            src="/logo.png"
+            alt="logo"
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="flex justify-center mb-6">
+          <img
+            src="/logo.png"
+            alt="The Beauty Room"
+            className="w-[220px] object-contain"
+          />
+        </div>
+
+        <h3 className="text-2xl font-bold">The Beauty Room</h3>
+        <p className="mt-2 opacity-90">Belleza • Elegancia • Cuidado</p>
+        <p className="mt-4 text-sm opacity-80">
+          Desarrollado por Ing Jefry MR.
+        </p>
+      </footer>
+    </div>
+  )
+}
